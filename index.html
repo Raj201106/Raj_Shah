@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raj Shah — Full Stack Developer & Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Cabinet+Grotesk:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Dark Theme (Default) */
+            --bg: #03050a;
+            --surface: #0a0f1d;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #5c85ff;
+            --primary-glow: rgba(92, 133, 255, 0.2);
+            --border: rgba(255, 255, 255, 0.08);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-theme="light"] {
+            --bg: #f1f5f9;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --text-muted: #475569;
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.1);
+            --border: rgba(0, 0, 0, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            background: var(--bg); color: var(--text); 
+            font-family: 'DM Sans', sans-serif; transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            padding: 1rem 5%; display: flex; align-items: center; justify-content: space-between;
+            background: rgba(var(--bg), 0.7); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo { font-family: 'Cabinet Grotesk', sans-serif; font-weight: 900; font-size: 1.6rem; letter-spacing: -1px; }
+        .logo span { color: var(--primary); }
+
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { 
+            text-decoration: none; color: var(--text-muted); 
+            font-size: 0.85rem; font-weight: 500; transition: var(--transition);
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+
+        .nav-actions { display: flex; align-items: center; gap: 1rem; }
+
+        /* --- THEME TOGGLE --- */
+        #theme-btn {
+            background: var(--surface); border: 1px solid var(--border);
+            color: var(--text); width: 40px; height: 40px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* --- SECTIONS --- */
+        section { padding: 120px 8% 80px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s all ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- HERO --- */
+        .hero { flex-direction: row; align-items: center; gap: 4rem; }
+        .hero-text { flex: 1; }
+        .hero-text h1 { font-family: 'Cabinet Grotesk', sans-serif; font-size: clamp(3rem, 8vw, 5rem); line-height: 1; margin-bottom: 1.5rem; }
+        .hero-text p { font-size: 1.2rem; color: var(--text-muted); max-width: 500px; margin-bottom: 2rem; }
+
+        .btn { 
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.8rem 1.8rem; border-radius: 12px; font-weight: 700;
+            text-decoration: none; transition: var(--transition); cursor: pointer;
+        }
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 10px 20px var(--primary-glow); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px var(--primary-glow); }
+        
+        /* --- GRIDS --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .card { 
+            background: var(--surface); padding: 2rem; border-radius: 24px; 
+            border: 1px solid var(--border); transition: var(--transition);
+            position: relative; overflow: hidden;
+        }
+        .card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .card h3 { font-family: 'Cabinet Grotesk', sans-serif; font-size: 1.5rem; margin-bottom: 1rem; }
+        .card img { width: 100%; height: 200px; border-radius: 16px; object-fit: cover; margin-bottom: 1.5rem; }
+
+        .tag { font-size: 0.7rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; display: block; }
+
+        /* --- EDUCATION & EXPERIENCE TIMELINE --- */
+        .timeline-item { padding-left: 2rem; border-left: 2px solid var(--border); margin-bottom: 2rem; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -9px; top: 0; width: 16px; height: 16px; background: var(--primary); border-radius: 50%; }
+
+        /* --- CONTACT FORM --- */
+        .contact-wrap { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; }
+        input, textarea { 
+            width: 100%; background: var(--surface); border: 1px solid var(--border); 
+            padding: 1rem; border-radius: 12px; color: var(--text); margin-bottom: 1rem; 
+        }
+
+        /* --- FOOTER --- */
+        footer { padding: 4rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
+
+        @media (max-width: 900px) {
+            .hero { flex-direction: column-reverse; text-align: center; }
+            .nav-links { display: none; }
+            .contact-wrap { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <nav>
+        <div class="logo">RAJ<span>.</span>SHAH</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button id="theme-btn" title="Toggle Light/Dark Mode">🌓</button>
+            <a href="photo/rajCV.pdf" class="btn btn-primary" style="padding: 0.6rem 1.2rem; font-size: 0.8rem;" download>Download CV</a>
+        </div>
+    </nav>
+
+    <section id="home" class="hero reveal">
+        <div class="hero-text">
+            <span class="tag">Available for Internships</span>
+            <h1>Turning Logic into <span>Digital Art.</span></h1>
+            <p>I'm Raj Shah, a Full-Stack Developer based in Surat. I specialize in ASP.NET, Python, and Creative Design.</p>
+            <div style="display: flex; gap: 1rem;">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn" style="border: 1px solid var(--border); color: var(--text);">Let's Talk</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            
+        </div>
+    </section>
+
+    <section id="about" class="reveal">
+        <span class="tag">01 / Background</span>
+        <h2>About Me</h2>
+        <div class="grid">
+            <div style="grid-column: span 2;">
+                <p style="font-size: 1.2rem; line-height: 1.8;">
+                    I am currently pursuing my <b>BSc in Information Technology</b> at SRKI, Surat. 
+                    With a CGPA of <b>9.00</b>, I bridge the gap between heavy backend logic and pixel-perfect 
+                    user interfaces. I don't just write code; I design experiences.
+                </p>
+            </div>
+            <div class="card">
+                <h3>Location</h3>
+                <p>Adajan, Surat, Gujarat</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="reveal">
+    <span class="tag">02 / Expertise</span>
+    <h2>Skills & Tools</h2>
+    <p class="subtitle">A specialized look at my technical stack and creative toolkit.</p>
+
+    <div class="grid">
+        <div class="card skill-card">
+            <div class="skill-icon-wrap">
+                <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dotnetcore/dotnetcore-original.svg" alt="ASP.NET Core" class="skill-mini-icon">
+                <img src="https://img.icons8.com/color/144/c-sharp-logo.png" alt="C# Icon" class="skill-mini-icon">
+            </div>
+            <h3>Backend Development</h3>
+            <p>Architecting scalable server-side logic using <b>ASP.NET Core</b> and <b>C#</b>. Experienced in MVC patterns and SQL Server integration.</p>
+            <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+        </div>
+
+        <div class="card skill-card">
+            <div class="skill-icon-wrap">
+                <img src="https://img.icons8.com/color/144/python--v1.png" alt="Python Icon" class="skill-mini-icon">
+                <img src="https://img.icons8.com/color/144/numpy.png" alt="NumPy Icon" class="skill-mini-icon">
+            </div>
+            <h3>Data Science & Logic</h3>
+            <p>Utilizing <b>Python</b> for data analysis. Proficient in <b>NumPy, Pandas,</b> and <b>Matplotlib</b> for visualizing complex datasets.</p>
+            <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
+        </div>
+
+        <div class="card skill-card">
+            <div class="skill-icon-wrap">
+                <img src="https://img.icons8.com/color/144/html-5--v1.png" alt="HTML Icon" class="skill-mini-icon">
+                <img src="https://img.icons8.com/color/144/javascript--v1.png" alt="JS Icon" class="skill-mini-icon">
+            </div>
+            <h3>Frontend Mastery</h3>
+            <p>Building responsive, user-centric interfaces with <b>Modern JS, HTML5,</b> and <b>Bootstrap</b> for seamless cross-device experiences.</p>
+            <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
+        </div>
+
+        <div class="card skill-card">
+            <div class="skill-icon-wrap">
+                <img src="https://img.icons8.com/color/144/figma--v1.png" alt="Figma Icon" class="skill-mini-icon">
+                <img src="https://img.icons8.com/color/144/canva.png" alt="Canva Icon" class="skill-mini-icon">
+            </div>
+            <h3>Creative Design</h3>
+            <p>Crafting high-impact branding and UI layouts in <b>Figma</b> and <b>Canva</b>. Specializing in conversion-focused visual marketing.</p>
+            <div class="skill-bar"><div class="skill-progress" style="width: 80%;"></div></div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Add these specific styles to your <style> tag */
+    .skill-icon-wrap {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .skill-mini-icon {
+        width: 45px;
+        height: 45px;
+        transition: transform 0.3s ease;
+    }
+
+    .skill-card:hover .skill-mini-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .skill-bar {
+        width: 100%;
+        height: 6px;
+        background: var(--border);
+        border-radius: 10px;
+        margin-top: 15px;
+        overflow: hidden;
+    }
+
+    .skill-progress {
+        height: 100%;
+        background: var(--primary);
+        border-radius: 10px;
+        transition: width 1s ease-in-out;
+    }
+
+    .skill-card {
+        background: linear-gradient(145deg, var(--surface), var(--bg));
+    }
+</style>
+
+    <section id="experience" class="reveal">
+        <span class="tag">03 / History</span>
+        <h2>Work Experience</h2>
+        <div class="timeline" style="margin-top: 3rem;">
+            <div class="timeline-item">
+                <h3>Freelance Graphic Designer</h3>
+                <p class="tag">2023 - Present</p>
+                <p>Designed marketing assets for Dhruv Shah (Electronics/FMCG), increasing customer engagement via optimized visual posters and banners.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Lead Developer (Project)</h3>
+                <p class="tag">Fire-Boltt E-Commerce</p>
+                <p>Engineered a full-scale shopping platform from scratch using ASP.NET Core and SQL Server.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="reveal">
+        <span class="tag">04 / Portfolio</span>
+        <h2>Selected Projects</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=600" alt="E-commerce Project">
+                <h3>Fire-Boltt Store</h3>
+                <p>Full-stack e-commerce site with cart, checkout, and admin dashboard.</p>
+            </div>
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?auto=format&fit=crop&q=80&w=600" alt="Quiz Project">
+                <h3>Quiz World</h3>
+                <p>Interactive educational platform featuring real-time score tracking and custom UI.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="reveal">
+        <span class="tag">05 / Academic</span>
+        <h2>Education</h2>
+        <div class="grid">
+            <div class="card">
+                <span class="tag">2024 - 2027</span>
+                <h3>B.Sc Information Technology</h3>
+                <p>SRKI, Surat. Current CGPA: 9.00/10</p>
+            </div>
+            <div class="card">
+                <span class="tag">Graduated 2024</span>
+                <h3>HSC - Commerce</h3>
+                <p>L.H. Boghra School. 90.53% (98.64 PR)</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="reveal">
+        <span class="tag">06 / Contact</span>
+        <h2>Let's Talk</h2>
+        <div class="contact-wrap">
+            <div>
+                <p style="margin-bottom: 2rem;">I'm always open to discussing new projects, creative ideas, or internship opportunities.</p>
+                <p><b>Email:</b> rajdhruvdip123@gmail.com</p>
+                <p><b>Phone:</b> +91 90234 22823</p>
+            </div>
+            <form action="mailto:rajdhruvdip123@gmail.com" method="post" enctype="text/plain">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea rows="5" placeholder="Tell me about your project..."></textarea>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Raj Shah. Designed & Built in Surat, India.</p>
+    </footer>
+
+    <script>
+        // --- THEME TOGGLE LOGIC ---
+        const themeBtn = document.getElementById('theme-btn');
+        const body = document.body;
+
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            themeBtn.innerHTML = newTheme === 'dark' ? '🌓' : '☀️';
+            localStorage.setItem('portfolio-theme', newTheme);
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('portfolio-theme');
+        if(savedTheme) {
+            body.setAttribute('data-theme', savedTheme);
+            themeBtn.innerHTML = savedTheme === 'dark' ? '🌓' : '☀️';
+        }
+
+        // --- SCROLL REVEAL ANIMATION ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Initial check
+
+        // --- ACTIVE NAV LINK HIGHLIGHT ---
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll(".nav-links a");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            navLinks.forEach((a) => {
+                a.classList.remove("active");
+                if (a.getAttribute("href") === `#${current}`) {
+                    a.classList.add("active");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
